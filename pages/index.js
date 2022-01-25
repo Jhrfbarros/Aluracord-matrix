@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from 'react'
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
-import React from 'react';
 import { useRouter } from 'next/router';
 import appConfig from '../config.json';
 
@@ -35,7 +35,14 @@ function Titulo(props) {
 
 export default function PaginaInicial() {
   //const username = 'Jhrfbarros';
-  const [username, setUsername] = React.useState('');
+  
+  const [user, setUser] = useState('')
+  useEffect(async () => {
+    fetch('https://api.github.com/users/jhrfbarros')
+    .then(response => response.json())
+    .then(data => setUser(data))
+  }, []) 
+  const [username, setUsername] = useState('');
   const handleInputChange = (event => setUsername(event.target.value))
   const roteamento = useRouter();
   const handleSubmit = (event => {
@@ -151,7 +158,13 @@ export default function PaginaInicial() {
                 
               }}
             >
-              {username}
+              
+              <h4>Usuário: {username}</h4>
+              <p>Id: {user.id}</p>
+              <p>Nome: {user.name}</p>
+              <p>Localização: {user.location}</p>
+
+              
             </Text>
              )}
           </Box>

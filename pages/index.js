@@ -35,8 +35,13 @@ function Titulo(props) {
 
 export default function PaginaInicial() {
   //const username = 'Jhrfbarros';
-  const [username, setUsername] = React.useState('Jhrfbarros');
+  const [username, setUsername] = React.useState('');
+  const handleInputChange = (event => setUsername(event.target.value))
   const roteamento = useRouter();
+  const handleSubmit = (event => {
+  event.preventDefault()
+  roteamento.push('/chat')
+  })
   
 
   return (
@@ -68,12 +73,7 @@ export default function PaginaInicial() {
           {/* Formulário */}
           <Box
             as="form"
-            onSubmit={function (infosDoEvento) {
-              infosDoEvento.preventDefault();
-              
-              roteamento.push('/chat');
-              // window.location.href = '/chat';
-            }}
+            onSubmit={handleSubmit}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
@@ -85,25 +85,15 @@ export default function PaginaInicial() {
             </Text>
 
             <TextField
-              value={username}
-              onChange={
-                function (event) {
-                
-                // Onde ta o valor?
-                const valor = event.target.value;
-                
-                
-                // Trocar o valor da variavel
-                // através do React e avise quem precisa
-                setUsername(username);
-                
-              }}
               fullWidth
+              onChange={handleInputChange}
+              value={username}
+              placeholder='Digite seu usuário Github'
               textFieldColors={{
                 neutral: {
                   textColor: appConfig.theme.colors.neutrals[200],
                   mainColor: appConfig.theme.colors.neutrals[900],
-                  mainColorHighlight: appConfig.theme.colors.primary[500],
+                  mainColorHighLight: appConfig.theme.colors.primary[500],
                   backgroundColor: appConfig.theme.colors.neutrals[800],
                 },
               }}
@@ -144,20 +134,26 @@ export default function PaginaInicial() {
                 borderRadius: '50%',
                 marginBottom: '16px',
               }}
-              src={`https://github.com/${username}.png`}
+              src={
+                username.length > 2
+                  ? `https://github.com/${username}.png`
+                  : 'https://www.fiscalti.com.br/wp-content/uploads/2021/02/default-user-image.png'
+              }
             />
+             {username.length > 2 && (
             <Text
               variant="body4"
               styleSheet={{
                 color: appConfig.theme.colors.neutrals[300],
                 backgroundColor: appConfig.theme.colors.neutrals[900],
                 padding: '3px 10px',
-                borderRadius: '1000px'
+                borderRadius: '1000px'  
                 
               }}
             >
               {username}
             </Text>
+             )}
           </Box>
           {/* Photo Area */}
         </Box>

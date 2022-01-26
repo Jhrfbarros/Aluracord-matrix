@@ -70,7 +70,10 @@ export default function ChatPage() {
             padding: "16px",
           }}
         >
-          <MessageList mensagens={listaDeMensagens} setMensagens={setListaDeMensagens}/>
+          <MessageList
+            mensagens={listaDeMensagens}
+            setMensagens={setListaDeMensagens}
+          />
           {/* {listaDeMensagens.map((mensagemAtual) => {
                         return (
                             <li key={mensagemAtual.id}>
@@ -168,16 +171,15 @@ function Header() {
 }
 
 function MessageList(props) {
-  const {mensagens,setMensagens} = props
+  const { mensagens, setMensagens } = props;
 
   function handleDelete(e, mensagemId) {
-    
     e.preventDefault();
     const deletedList = mensagens.filter(
-      mensagem => mensagem.Id !== mensagemId
+      (mensagem) => mensagem.id !== mensagemId
     );
     setMensagens(deletedList);
-    console.log(mensagens)
+    console.log(mensagens);
   }
 
   return (
